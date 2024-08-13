@@ -1,0 +1,17 @@
+{
+	"name": "DS_source_copy_sales",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "k_link_sales_DB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "sales"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

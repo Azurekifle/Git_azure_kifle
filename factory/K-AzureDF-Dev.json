@@ -1,0 +1,9 @@
+{
+	"name": "K-AzureDF-Dev",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "19ec4bf9-3a12-4300-bb5c-e71a6a813228",
+		"tenantId": "b9fec68c-c92d-461e-9a97-3d03a0f18b82"
+	}
+}

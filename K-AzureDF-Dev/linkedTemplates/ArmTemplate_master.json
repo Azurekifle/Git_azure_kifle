@@ -1,0 +1,133 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "K-AzureDF-Dev"
+		},
+		"AzureSqlDatabase1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabase1'"
+		},
+		"k_link_AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'k_link_AzureBlobStorage1'"
+		},
+		"k_link_Azure_DB_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'k_link_Azure_DB'"
+		},
+		"k_link_sales_DB_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'k_link_sales_DB'"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "k-test-server.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "sales"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "kifle"
+		},
+		"k_link_Azure_DB_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "k-test-server.database.windows.net"
+		},
+		"k_link_Azure_DB_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "K_TESTDB01"
+		},
+		"k_link_Azure_DB_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "kifle"
+		},
+		"k_link_sales_DB_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "k-test-server.database.windows.net"
+		},
+		"k_link_sales_DB_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "sales"
+		},
+		"k_link_sales_DB_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "kifle"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "K-AzureDF-Dev_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureSqlDatabase1_password": {
+						"value": "[parameters('AzureSqlDatabase1_password')]"
+					},
+					"k_link_AzureBlobStorage1_connectionString": {
+						"value": "[parameters('k_link_AzureBlobStorage1_connectionString')]"
+					},
+					"k_link_Azure_DB_password": {
+						"value": "[parameters('k_link_Azure_DB_password')]"
+					},
+					"k_link_sales_DB_password": {
+						"value": "[parameters('k_link_sales_DB_password')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_server": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_server')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_database": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_database')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_userName": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]"
+					},
+					"k_link_Azure_DB_properties_typeProperties_server": {
+						"value": "[parameters('k_link_Azure_DB_properties_typeProperties_server')]"
+					},
+					"k_link_Azure_DB_properties_typeProperties_database": {
+						"value": "[parameters('k_link_Azure_DB_properties_typeProperties_database')]"
+					},
+					"k_link_Azure_DB_properties_typeProperties_userName": {
+						"value": "[parameters('k_link_Azure_DB_properties_typeProperties_userName')]"
+					},
+					"k_link_sales_DB_properties_typeProperties_server": {
+						"value": "[parameters('k_link_sales_DB_properties_typeProperties_server')]"
+					},
+					"k_link_sales_DB_properties_typeProperties_database": {
+						"value": "[parameters('k_link_sales_DB_properties_typeProperties_database')]"
+					},
+					"k_link_sales_DB_properties_typeProperties_userName": {
+						"value": "[parameters('k_link_sales_DB_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

@@ -1,0 +1,16 @@
+{
+	"name": "ds_copy_emp_file_to_DB_emp",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "k_link_Azure_DB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "emp"
+		}
+	}
+}

@@ -1,0 +1,10 @@
+{
+	"name": "myPrivateLinkService",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/697c45ee-1815-4180-b840-020ef55229a5/resourceGroups/kifle_admin/providers/Microsoft.Network/privateLinkServices/myPrivateLinkService",
+		"groupId": "",
+		"fqdns": [
+			"kifle-managedinstance.83a5e70aecc4.database.windows.net"
+		]
+	}
+}

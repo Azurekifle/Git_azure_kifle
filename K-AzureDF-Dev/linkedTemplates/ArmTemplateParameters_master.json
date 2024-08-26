@@ -11,6 +11,9 @@
 		"k_link_AzureBlobStorage1_connectionString": {
 			"value": ""
 		},
+		"k_link_AzureSqlManaged_instance_password": {
+			"value": ""
+		},
 		"k_link_Azure_DB_password": {
 			"value": ""
 		},
@@ -24,6 +27,15 @@
 			"value": "sales"
 		},
 		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"value": "kifle"
+		},
+		"k_link_AzureSqlManaged_instance_properties_typeProperties_server": {
+			"value": "kifle-managedinstance.83a5e70aecc4.database.windows.net"
+		},
+		"k_link_AzureSqlManaged_instance_properties_typeProperties_database": {
+			"value": "kifle_db"
+		},
+		"k_link_AzureSqlManaged_instance_properties_typeProperties_userName": {
 			"value": "kifle"
 		},
 		"k_link_Azure_DB_properties_typeProperties_server": {
@@ -43,6 +55,17 @@
 		},
 		"k_link_sales_DB_properties_typeProperties_userName": {
 			"value": "kifle"
+		},
+		"myPrivateLinkService_properties_privateLinkResourceId": {
+			"value": "/subscriptions/697c45ee-1815-4180-b840-020ef55229a5/resourceGroups/kifle_admin/providers/Microsoft.Network/privateLinkServices/myPrivateLinkService"
+		},
+		"myPrivateLinkService_properties_groupId": {
+			"value": ""
+		},
+		"myPrivateLinkService_properties_fqdns": {
+			"value": [
+				"kifle-managedinstance.83a5e70aecc4.database.windows.net"
+			]
 		},
 		"containerUri": {
 			"value": ""

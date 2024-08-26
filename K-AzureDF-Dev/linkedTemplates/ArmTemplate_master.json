@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'k_link_AzureBlobStorage1'"
 		},
+		"k_link_AzureSqlManaged_instance_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'k_link_AzureSqlManaged_instance'"
+		},
 		"k_link_Azure_DB_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'k_link_Azure_DB'"
@@ -32,6 +36,18 @@
 			"defaultValue": "sales"
 		},
 		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "kifle"
+		},
+		"k_link_AzureSqlManaged_instance_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "kifle-managedinstance.83a5e70aecc4.database.windows.net"
+		},
+		"k_link_AzureSqlManaged_instance_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "kifle_db"
+		},
+		"k_link_AzureSqlManaged_instance_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "kifle"
 		},
@@ -58,6 +74,20 @@
 		"k_link_sales_DB_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "kifle"
+		},
+		"myPrivateLinkService_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/697c45ee-1815-4180-b840-020ef55229a5/resourceGroups/kifle_admin/providers/Microsoft.Network/privateLinkServices/myPrivateLinkService"
+		},
+		"myPrivateLinkService_properties_groupId": {
+			"type": "string",
+			"defaultValue": ""
+		},
+		"myPrivateLinkService_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"kifle-managedinstance.83a5e70aecc4.database.windows.net"
+			]
 		},
 		"containerUri": {
 			"type": "string",
@@ -124,6 +154,15 @@
 					},
 					"k_link_sales_DB_properties_typeProperties_userName": {
 						"value": "[parameters('k_link_sales_DB_properties_typeProperties_userName')]"
+					},
+					"myPrivateLinkService_properties_privateLinkResourceId": {
+						"value": "[parameters('myPrivateLinkService_properties_privateLinkResourceId')]"
+					},
+					"myPrivateLinkService_properties_groupId": {
+						"value": "[parameters('myPrivateLinkService_properties_groupId')]"
+					},
+					"myPrivateLinkService_properties_fqdns": {
+						"value": "[parameters('myPrivateLinkService_properties_fqdns')]"
 					}
 				}
 			},
@@ -142,6 +181,18 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"k_link_AzureSqlManaged_instance_password": {
+						"value": "[parameters('k_link_AzureSqlManaged_instance_password')]"
+					},
+					"k_link_AzureSqlManaged_instance_properties_typeProperties_server": {
+						"value": "[parameters('k_link_AzureSqlManaged_instance_properties_typeProperties_server')]"
+					},
+					"k_link_AzureSqlManaged_instance_properties_typeProperties_database": {
+						"value": "[parameters('k_link_AzureSqlManaged_instance_properties_typeProperties_database')]"
+					},
+					"k_link_AzureSqlManaged_instance_properties_typeProperties_userName": {
+						"value": "[parameters('k_link_AzureSqlManaged_instance_properties_typeProperties_userName')]"
 					}
 				}
 			},

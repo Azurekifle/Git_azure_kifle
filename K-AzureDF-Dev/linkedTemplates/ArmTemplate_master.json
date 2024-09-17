@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'AzureSqlDatabase1'"
 		},
+		"SSIS_package_Azure_storage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SSIS_package_Azure_storage'"
+		},
 		"k_link_AzureBlobStorage1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'k_link_AzureBlobStorage1'"
@@ -105,7 +109,7 @@
 		{
 			"name": "K-AzureDF-Dev_ArmTemplate_0",
 			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
+			"apiVersion": "2024-03-01",
 			"properties": {
 				"mode": "incremental",
 				"templateLink": {
@@ -118,6 +122,9 @@
 					},
 					"AzureSqlDatabase1_password": {
 						"value": "[parameters('AzureSqlDatabase1_password')]"
+					},
+					"SSIS_package_Azure_storage_connectionString": {
+						"value": "[parameters('SSIS_package_Azure_storage_connectionString')]"
 					},
 					"k_link_AzureBlobStorage1_connectionString": {
 						"value": "[parameters('k_link_AzureBlobStorage1_connectionString')]"
@@ -154,15 +161,6 @@
 					},
 					"k_link_sales_DB_properties_typeProperties_userName": {
 						"value": "[parameters('k_link_sales_DB_properties_typeProperties_userName')]"
-					},
-					"myPrivateLinkService_properties_privateLinkResourceId": {
-						"value": "[parameters('myPrivateLinkService_properties_privateLinkResourceId')]"
-					},
-					"myPrivateLinkService_properties_groupId": {
-						"value": "[parameters('myPrivateLinkService_properties_groupId')]"
-					},
-					"myPrivateLinkService_properties_fqdns": {
-						"value": "[parameters('myPrivateLinkService_properties_fqdns')]"
 					}
 				}
 			},
@@ -171,7 +169,7 @@
 		{
 			"name": "K-AzureDF-Dev_ArmTemplate_1",
 			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
+			"apiVersion": "2024-03-01",
 			"properties": {
 				"mode": "incremental",
 				"templateLink": {
@@ -184,6 +182,15 @@
 					},
 					"k_link_AzureSqlManaged_instance_password": {
 						"value": "[parameters('k_link_AzureSqlManaged_instance_password')]"
+					},
+					"myPrivateLinkService_properties_privateLinkResourceId": {
+						"value": "[parameters('myPrivateLinkService_properties_privateLinkResourceId')]"
+					},
+					"myPrivateLinkService_properties_groupId": {
+						"value": "[parameters('myPrivateLinkService_properties_groupId')]"
+					},
+					"myPrivateLinkService_properties_fqdns": {
+						"value": "[parameters('myPrivateLinkService_properties_fqdns')]"
 					},
 					"k_link_AzureSqlManaged_instance_properties_typeProperties_server": {
 						"value": "[parameters('k_link_AzureSqlManaged_instance_properties_typeProperties_server')]"

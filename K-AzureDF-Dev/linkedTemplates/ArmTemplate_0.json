@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'AzureSqlDatabase1'"
 		},
+		"SSIS_package_Azure_storage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SSIS_package_Azure_storage'"
+		},
 		"k_link_AzureBlobStorage1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'k_link_AzureBlobStorage1'"
@@ -58,20 +62,6 @@
 		"k_link_sales_DB_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "kifle"
-		},
-		"myPrivateLinkService_properties_privateLinkResourceId": {
-			"type": "string",
-			"defaultValue": "/subscriptions/697c45ee-1815-4180-b840-020ef55229a5/resourceGroups/kifle_admin/providers/Microsoft.Network/privateLinkServices/myPrivateLinkService"
-		},
-		"myPrivateLinkService_properties_groupId": {
-			"type": "string",
-			"defaultValue": ""
-		},
-		"myPrivateLinkService_properties_fqdns": {
-			"type": "array",
-			"defaultValue": [
-				"kifle-managedinstance.83a5e70aecc4.database.windows.net"
-			]
 		}
 	},
 	"variables": {
@@ -144,6 +134,20 @@
 						"type": "SecureString",
 						"value": "[parameters('AzureSqlDatabase1_password')]"
 					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SSIS_package_Azure_storage')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureFileStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('SSIS_package_Azure_storage_connectionString')]",
+					"fileShare": "ssis-package"
 				}
 			},
 			"dependsOn": []
@@ -465,6 +469,38 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/SSIS-IR-FileShare')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "East US 2",
+						"nodeSize": "Standard_D2_v3",
+						"numberOfNodes": 1,
+						"maxParallelExecutionsPerNode": 2
+					},
+					"ssisProperties": {
+						"edition": "Standard",
+						"licenseType": "LicenseIncluded",
+						"packageStores": [
+							{
+								"name": "sssis_package_file_store",
+								"packageStoreLinkedService": {
+									"referenceName": "SSIS_package_Azure_storage",
+									"type": "LinkedServiceReference"
+								}
+							}
+						]
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SSIS_package_Azure_storage')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/integrationRuntime1')]",
 			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
 			"apiVersion": "2018-06-01",
@@ -494,91 +530,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/default/myPrivateLinkService')]",
-			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"privateLinkResourceId": "[parameters('myPrivateLinkService_properties_privateLinkResourceId')]",
-				"groupId": "[parameters('myPrivateLinkService_properties_groupId')]",
-				"fqdns": "[parameters('myPrivateLinkService_properties_fqdns')]"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/EMP_FILE_PL')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "CP_EMP_File",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "ds_emp_file_blob",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DS_SQL_EMP",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": [],
-				"lastPublishTime": "2024-08-19T16:54:38Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_emp_file_blob')]",
-				"[concat(variables('factoryId'), '/datasets/DS_SQL_EMP')]"
 			]
 		}
 	]

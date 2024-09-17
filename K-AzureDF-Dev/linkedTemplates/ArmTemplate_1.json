@@ -11,6 +11,20 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'k_link_AzureSqlManaged_instance'"
 		},
+		"myPrivateLinkService_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/697c45ee-1815-4180-b840-020ef55229a5/resourceGroups/kifle_admin/providers/Microsoft.Network/privateLinkServices/myPrivateLinkService"
+		},
+		"myPrivateLinkService_properties_groupId": {
+			"type": "string",
+			"defaultValue": ""
+		},
+		"myPrivateLinkService_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"kifle-managedinstance.83a5e70aecc4.database.windows.net"
+			]
+		},
 		"k_link_AzureSqlManaged_instance_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "kifle-managedinstance.83a5e70aecc4.database.windows.net"
@@ -28,6 +42,151 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/default/myPrivateLinkService')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"privateLinkResourceId": "[parameters('myPrivateLinkService_properties_privateLinkResourceId')]",
+				"groupId": "[parameters('myPrivateLinkService_properties_groupId')]",
+				"fqdns": "[parameters('myPrivateLinkService_properties_fqdns')]"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/EMP_FILE_PL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "CP_EMP_File",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_emp_file_blob",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DS_SQL_EMP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-08-19T16:54:38Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excute_SSIS')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Execute SSIS package1",
+						"type": "ExecuteSSISPackage",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"packageLocation": {
+								"packagePath": "\\\\kiflestorage.file.core.windows.net\\ssis-package\\Customer_AZURE_IR_Deploy_.dtsx",
+								"type": "File",
+								"typeProperties": {
+									"accessCredential": {
+										"domain": "Azure",
+										"userName": "kiflestorage",
+										"password": {
+											"type": "SecureString",
+											"value": "**********"
+										}
+									},
+									"configurationPath": "\\\\kiflestorage.file.core.windows.net\\ssis-package\\config_Customer_Azure_IR_Deploy.dtsConfig"
+								}
+							},
+							"connectVia": {
+								"referenceName": "SSIS-IR-FileShare",
+								"type": "IntegrationRuntimeReference"
+							},
+							"loggingLevel": "Basic",
+							"projectConnectionManagers": {},
+							"packageConnectionManagers": {},
+							"logLocation": {
+								"logPath": "\\\\kiflestorage.file.core.windows.net\\ssis-package",
+								"type": "File",
+								"typeProperties": {
+									"accessCredential": {
+										"domain": "Azure",
+										"userName": "kiflestorage",
+										"password": {
+											"type": "SecureString",
+											"value": "**********"
+										}
+									}
+								}
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PL_COPY_EMPfiles_to_DB')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",

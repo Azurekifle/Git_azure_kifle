@@ -8,6 +8,9 @@
 		"AzureSqlDatabase1_password": {
 			"value": ""
 		},
+		"SSIS_package_Azure_storage_connectionString": {
+			"value": ""
+		},
 		"k_link_AzureBlobStorage1_connectionString": {
 			"value": ""
 		},

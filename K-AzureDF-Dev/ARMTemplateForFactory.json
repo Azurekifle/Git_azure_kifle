@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'AzureSqlDatabase1'"
 		},
+		"SSIS_package_Azure_storage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SSIS_package_Azure_storage'"
+		},
 		"k_link_AzureBlobStorage1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'k_link_AzureBlobStorage1'"
@@ -164,6 +168,73 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_emp_file_blob')]",
 				"[concat(variables('factoryId'), '/datasets/DS_SQL_EMP')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excute_SSIS')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Execute SSIS package1",
+						"type": "ExecuteSSISPackage",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"packageLocation": {
+								"packagePath": "\\\\kiflestorage.file.core.windows.net\\ssis-package\\Customer_AZURE_IR_Deploy_.dtsx",
+								"type": "File",
+								"typeProperties": {
+									"accessCredential": {
+										"domain": "Azure",
+										"userName": "kiflestorage",
+										"password": {
+											"type": "SecureString",
+											"value": "**********"
+										}
+									},
+									"configurationPath": "\\\\kiflestorage.file.core.windows.net\\ssis-package\\config_Customer_Azure_IR_Deploy.dtsConfig"
+								}
+							},
+							"connectVia": {
+								"referenceName": "SSIS-IR-FileShare",
+								"type": "IntegrationRuntimeReference"
+							},
+							"loggingLevel": "Basic",
+							"projectConnectionManagers": {},
+							"packageConnectionManagers": {},
+							"logLocation": {
+								"logPath": "\\\\kiflestorage.file.core.windows.net\\ssis-package",
+								"type": "File",
+								"typeProperties": {
+									"accessCredential": {
+										"domain": "Azure",
+										"userName": "kiflestorage",
+										"password": {
+											"type": "SecureString",
+											"value": "**********"
+										}
+									}
+								}
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/SSIS-IR-FileShare')]"
 			]
 		},
 		{
@@ -1086,6 +1157,20 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/SSIS_package_Azure_storage')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureFileStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('SSIS_package_Azure_storage_connectionString')]",
+					"fileShare": "ssis-package"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/k_link_AzureBlobStorage1')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -1190,6 +1275,38 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SSIS-IR-FileShare')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "East US 2",
+						"nodeSize": "Standard_D2_v3",
+						"numberOfNodes": 1,
+						"maxParallelExecutionsPerNode": 2
+					},
+					"ssisProperties": {
+						"edition": "Standard",
+						"licenseType": "LicenseIncluded",
+						"packageStores": [
+							{
+								"name": "sssis_package_file_store",
+								"packageStoreLinkedService": {
+									"referenceName": "SSIS_package_Azure_storage",
+									"type": "LinkedServiceReference"
+								}
+							}
+						]
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SSIS_package_Azure_storage')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/integrationRuntime1')]",

@@ -1,0 +1,55 @@
+{
+	"name": "pl_Excute_SSIS_lift_shift",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute SSIS package1",
+				"type": "ExecuteSSISPackage",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"packageLocation": {
+						"type": "InlinePackage",
+						"typeProperties": {
+							"packagePassword": {
+								"type": "SecureString",
+								"value": "**********"
+							},
+							"packageName": "Sales_azure_lift_shift.dtsx",
+							"packageContent": "VER001_H4sIAAAAAAAAA+0da2/bOPL7AfcftP50B0SyXn4ljvds2d4zmja52FtgkRaBLNGxrrLkilIee9j/fkNRsiRbluXELzUN0G5DDofDeXGG4nCbvz7PTOYROdiwrcuSwPGlX1t//1uzOxqe956R5rnq2EQMAFn4HBovS09PT9zM0Bwb2xOX0+xZefjdHCIHcJS7Li79/W8MQ0Y7aDLQL0s3qvZNfUCLZsVBqgtzdVUXXZYaZaFWFnlRZsRzSTrnZebm4wroJ3UGoB8Xc6aitB3Fns09FzkUXGmzV7WbP/748Ie0DEgBfru9/v1m8Kl/2/7yzZiYiJsgy1UXsPBn0L0s/U/q1oW21BNZpSP1WZkXG2y9pkisUOlU23yDb3QV8a/FqJ5F2KXY1sR4uCyNHC+iMuLm6GWeuZ4rFbsfbd2YGEi/cWzd09zPCwFVOZ6rVOsVENQC3tZUExFqBV6KVns9/i/SXLrYIQDge/VPz0H3pjFx7/EU/l6ABhRQwipRs2O7gAImvkKPyLwsRXMGBHU8wwQhC8Jyx2+/+9xTGmK90VAEtl/piqxcFStsXWkrbK9T7QqC1O/1Oo2/Si0yuBnMOEeO+0IaKD5Kf0Bg33ZmasiMUqveLMcHRWhAABYl/KNqwTgHtyjG9F7al6a23Cqmuw/3o95w1O3wwtdSfGRSXa+vet1Ooj/UqIZc5QWxJrN8v99l5Xa9w9arSo/t85IiNIAvfLX7V2JkXJLR7KVWCJNgXe957iBMGBR2JxmJ8ZPt6KXWv+5+x8g5Pw9bviaZGaF5zTQENflXNA35O+cUdLngINRWhDtbcgsZUIBb5Doviu1ZLuhmKQtoYIHHeFTNUO1T4GC2oesYFhg0oYkZ2p6joctvrIuwy2Lf83E69IxVjLgnw9LtJ8xZyL0ga2ZA5r5/uRhYhmuoJqMAqGk/XEaSvACOPBo6ci6H/7n6pFwNBIETLtrzuWlovkoxPleHw8GQDRSTzadGm4nkIjI4Smfbc21m5KgWNomP7qsmRhelVpw7VBMCxYl3pKpaEmCILAyMeERENK1AIwLQuLzLqQKPNKWcqirZw3Zq/uLrzL/abfSkXlVh25LSYOUaDy6xr3RYodbvVNq9Tr8tdXKYv/jT/H8Q8xdfZf651Ggb8xd/dPNf04cTYQPEbZ7jM305ZIh6ElYf7wj1RDn/QmSP44Hlly7C31x7/oWI8T4Q430XzU37ZQYAXzQf073iYdeeIee+7Qdrg9sAhtNdTCcrrZ2fxm9ChltK9UjdntCt9hpttsv3YCfhuz22Lsk1VuyKEi/Uq+1OGOKmeSSy0nuYRYdFgH6XmHKS28sc9fn5WXUMEgonmBw2bkl+v1MVq51ajYUtsM7Kcq3P1mUI0yWp15faSqOnNKQk+QNLMz0dDawuGnsPXW82vyyJklxJAJEZ8VzVgiWuXX/kUhNeLFzMZ9X0UNJHEn2loqqXWoqJ1IljaFP+F8qyxMCEWoc9O+BZRxQFgVcqbKMGcpcFqcO2lXaHbSg9pQYBhCi1a3vkmd/5On75JrUVp5JNMSWMMrKEGkbN6wODLzShuoIkilEtnRmSdIrp9oilMr7lZhhhLPMz5sg0rCQwOArNMeaun+/5W07ftJ+YkYq/pcpSRXJ1rNV1VtcaE1YeN0Qw36rI1qpjvYJ0tS7q9aQsM1LRNIKi/JIV1op0M0PS5Y0Df7HoSN/+5wFh8c0kOrVY2p40eza3LfBHONEe70m2M8y24v0CAR7T7TAgLNewfOGWlnEuJlNM8BGEfxGj/fgwezBsGpo7sCa2H00uTXaxQMUotjO3qYe9YKJmiCUYeixzwfxD+SezZkDbNJlb42HqYuYW+YGCfsFMXXd+Xi6vHvXg72YZe3MY7l7IKzTrcc3NwSArDJU3AXoY4a6B5zYJHWAjuSy54dFK/GehEHKptdzXnNOw00DLShHvfVntgmUt/M/wBbtoxkHUKIkrs69wYDRFjOXNxhAF2hMGIxCpjpkxmtgOYlSiHjOiXK4BTpOxPZdjmDbzSJwZgecZiNJIAAidqgW/TAyIIJEPzhLoVAIoSxWKegSgAFlq8c3yPH5I8pbF0yBn8+qHc6SRIyzMuIQPQBdZFfl3GIcytm/qRLrABZsBIizgiwOhKcpc3jUA3vpQpdadPra/cncwtXs/siG0vkUPJBQDA/569FU/Bk4OflFdatKGtVeGhG6VhNYHXzxReOJ2Fpptg7YzyN9tkJ61gOF3M9DZVKDfB4Senm64thP3on5kQFKViX8wSOQOHszQECaZu+vYJuY+2rpqfvRM1yD7B10KxbRTHuX0CUn90GzTm1nwHx0xc9h3CMdA+MzTFMVbwfbD9TEGZjxLfVQN01esiWPPFjrEYD83zWJ0F01U4IUCuG/ImXNLECviDtnQsW0IaFc9+Aoj+jZQSrlAVhxYwhJ5TDh34BZ9vlA0YxAjo01VBzZJcLCEkKx1t80n9QVD3LnCgAlJcI+tCDMi69DsVQ04gxOeIXNpPjio+eqGSH5cIA6MAfZG4FMCuiUdQ/CDxa4G0oQ1OoGnBPlihsQWpgFsAIVnDD+lBOFTM4EBBgQrY2I2c4OyyudRFDhwzGDC+AI9CzFmIlI912YfkIUgGgKE4KNXEPrHMGR/tswXxiDYscuYtqoTS3Q9x4JxAJchnz6MuIIBHxCaDwJKdq92b+R/yJlgjyLGZXnAJJ9TU/UR0V9h9yJ6BIu3sni/GRsMNsBqqTGGslpg378gPgE5ePdS2D5MsP0WHOyVvgt4MtxptDwSFe5s6dd0tlJr1O5cXSsfzpR/95QP98r1p+Hotj34NBoe0xMG295sZkA2okKQbGDswdp0j3CVbnFUR3yNSEbLOOZQQX8g8QpQLaw9wBYoF4IABQauIt0Zsz+qzwMfseLTMTT+BJ8rCnJNhvxcrmVwetGVlq1AEhseYaamMlF3Gok7SHRjX0Xw3bWJuuOo4WsqX7TlQ1eSDG/5jSUT3+2rPtusVUkSyAbrdjyLZFyxKV+7Ty9xqhQ7+IjkniXbpmHNvZUzjahnX+Ie+NPerfYwfk86P5Hj2M61MwL+0Y8YkKPQMweyBRGrWD8MUplYtk8MyiDpAT1MSR02VfEQdvneZALMW3c8EBPFmqWsHhtE3FXonpYKkYRJhziMLLiAzDtDT5cL+dFUbYr06FjVWD3KSYLSIz4jPTkjP+gZgksL8izkqsQWKBX7X20vmDfPqkn6B5S8iij60Y+79tw4QbSVoa1J1qcY94kqCsF+Ax7StvrEODZpDUmcSFJ6WSKZY24Vw66zAfYKWQ/ulNxh4nNp4xLdJ6+aufl8MD1doaiISntVUKW9KpjSbuDzEZT2qmhKG9zlLJTCxmg+eWXNxd+DKWqCmuIo6QAyd2ybu48eQ8Qnr0abOXAwHYpIKY4CEXrnjqFt9HFba9AC88mrUA4eHEyHYrQUS4lIhUh+HdLHBD63HmUCn5IaZXPhoFpESSmOEmmG+1KYQIsQe/IKmc3RgykjJaNAikiuojsF0kVK7+mr4ya+Hk4jQ0qKo5SOf0+qMDpJyT15ldzE1YNpZEjIGoVsljd+1Gim8xSnL80gl2v0oOZ1nQ2kYzyqOWzzBUHPk7FY4beS9a6gAGzI/1UguEi1wUHouVyDmcMpWKmn/z8IszedZh+b2VfFZ3a+U9jjMDp+2lpoJm8+Q9vCly5ODgvNkhxnQlvwJDoLKzxTsk849LwnPFbybKfQbNlwcnEc5+SfUBSbrRvz8CNxNsi3C83cjfnkcXgb5I1r06A1SU7aJTuaMqVc2ltzL69p00wtDRftSiNpF8JbShHj0uuRC3Zhtph+Be9ZMz3/DR/H9ubLLyiEPwb2MQGi19y2i1OROhK/WNrUsS3bw76+7f8SY7p+UDltuPsXB9qnTeYV6+IQwG8lRzhvjDnecmqx7wVQHVsAroXz74erZt9UHzBR6vXO9tTFSX4puECzl5AQKQHNKVRxvZvfbMfrjrtSUYYIUzaDdKdPbnYHF5j3XpNOTwRXeLaxHH3tuNVKdAp6AkXotRVy04rQ16wssT2tgdm29Lz2s/T8nZWe/6w6/1l1fqyq8214lKEWb2XfXuT/s6L+Z0V90Srqj7HbEdueqfM5AJMt3n1CiBZnz0GUMwQ04rBcO27n5E/oEnAWN25CNB/pJJlGfoKVq8Fn88MVrQo58W1RtLoGZRGKVg96CJbnisTmk6oE/KkeDG1dkvimA4Oscl7qC3Hm9ZzXlfX6Q3d3sycXy062pDT7tCSjONddCC1bAsc5EXtbyeJBvja8X+XPX7Sa44PM8Qpbs00nbyXxD2lHh7xx9NOONtfRnqYdbaA6/ZrYO7Cjw18me782lK+895TsJxfFqzf/3oHd7Oh+4Ps1hpMsUs5W8Y0F4D+Qfu/qsuf7VfATLaHOVvHNFeo/mI7v6O7u+1bzkyvx3qzkmdL8gXT8gBex368NbKgqP6WIPpvU2D3592AbB71N/47NY2OV+0lZyCZqkyUP78BODloY8X7NZGPl/SlZySZiE7Ure7KRt1yKTifphN4A2Pmn3mLV/u/3Y9/Ry9BPo+Z/v1+Cjs7k06j139+ngp81/vs6ei5ibf++DikLWdO/p6Osotby7+FU4z3X8O8nC37ntft7yZl+gJr9NXWah799vLnwfvuS+hTUhbyunF4r/OZ0bG/p/Pb05sgMT4z7p5sNHlisb7xNWkCBn1pmejSBv+raY2EEfppZ8oGF/co7eoUR8o6y9QNLZes7ZYWRx66ODA4skFdcgSqUSHZ0cHEEqWx1ZacwMjmx05MDyzX3NZPiyPPkjm8OLdLt7kUURrAnd4R0YLlu9SW/MFI9hYcD90N2sZ4LfD0PjvxI4L4If0dPA8bak0Oac9WdrmAhjctTbqt23A3BnPPZDGTph/9fy2e807EMil3Ved27sXm+pSzrU7O8LBVoMeaIGNGisVnujobn1/57a+QVsaCDNvf8J7fIczx+83IjRd0kjcAn48EiT+zdRI/tNH+5U7rtUfuu+evzzIweJBQ4vvQrjG3+wrKjqYEZH4q8CejzOfEOmKm+gI4mXscKnpGaB4/UMOSVmXCsYWmmpyOcGIA9bcqomPnH89nLPwG97ehEpgifMU+G7k7PfOZPEXnukWPZgLLBhIGpmZlqeappvjBIN1yYGMgNJyOjZuo38nzhzADZfkNn/hBNJQ9YmchFjOFyzALjKKIaJjZN0Afy9xgQ+I+g2YxpqzpjEcLJjGPPpSt10KNheziNGU8BBtPGVIf8Z3R8aSCH9qqeaxNozUfqIFZ1HNUiD5EBKJA5I+bM2FZsKLDMmaigcJR2qh7+FbvPoRDr9LMOWVdPBf5a5HWrMTLtJzprIEUmenyJvvKm2wAKpE4m5IW/8FmgMZqqsEaHTghoAwuh2kiJYv3HHsMXoPzu8NNS88rnDHkQNNLs3xx1PqUdkQkoKkgA8pTLklxiQCvJ85ma6fhoMXSh8+hVveF3k74USt77Qg9O8mG9bsBk8rAeMjloB99u/EnfD1UxRrOx+XKZF5tPbPxLWfMToF2mnmGGxp+wfFGSOflMFrhqwsds5VoSI0f2/ApNXLBNWeYa5Efka7VK5axe5ar+D1+VGo1aJe5kmuUYixeOY0kUzXJAEf1tpOJv/wZd3SDYHOT/YKKnFJ3PMH4wUR7C/GEcXWTPegCnnj11YpoFZCl40xZrUzRT8dK7tk/gap7LIs9Xy8/qzMytn0JFfKN2ZrwcvNBVWa5wdUmSxGq1Uq3VK2dCRaLKW6vxFVFcCpGzKa4J3K5ojgUNawiXxIDweoWv8MKZJEtcnViZUJEbFXkpNGz29IcUwvcTRy2IrIg8J/hE1ipSVZbOhEaFq8S5m4w2IiI5xQONW44GqWaf+33LgdGQBEbBm27kZdP/hfp5/skzzb9WAqmepceg+TNBrnMi4Z9Ul4G5q/9/AH8CArmapQMuioLnanEUq9FyfAVg9A+zlTg4CRiAQGhurn9DMPJKlTUXJQJsV+TVVooxPcFYt5A1OcE6IlOyhDwLT0ItBaKZuhHXnCsVQogV1BQAeiIqV2LdLCTx3nhz24JQxLfTVesaQYZ1WfoloS43qgMrf/0u24eYiD5anqXg1CFJ4I34FV80lpCs1TWNFRu8zMp6Y8yOGzzPyhNdk7QaL42lxhpz5sA/CjXed5B1sVLha/IrNvNw/w6itCCdWFR2hOnom7f3NF8aUnWz+p5n2PaS8PcwZYskNdTdfTbQ06DbLPvN0bJXRq7HNSJxOmEGDYjJccUSOoD8TF6xjYvA9U81vovnmD6fStE0yz7gekIWDeE6oWEduw8ljWA3/imIDEE0y0G61Pr6tUVT5tTsmEAuJdn/BxrD8xT7sAAA",
+							"packageLastModifiedDate": "2024-09-19T12:50:46.259Z UTC-4:00"
+						}
+					},
+					"environmentPath": null,
+					"connectVia": {
+						"referenceName": "SSIS-IR-lift-shift-mbede",
+						"type": "IntegrationRuntimeReference"
+					},
+					"loggingLevel": "Basic",
+					"logLocation": {
+						"logPath": "\\\\kiflestorage.file.core.windows.net\\ssis-package",
+						"type": "File",
+						"typeProperties": {
+							"accessCredential": {
+								"domain": "Azure",
+								"userName": "kiflestorage",
+								"password": {
+									"type": "SecureString",
+									"value": "**********"
+								}
+							}
+						}
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}
